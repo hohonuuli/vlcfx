@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>hohonuuli</groupId>
-  <artifactId>vlcj-demo-javafx</artifactId>
+  <artifactId>vlcfx</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <name>vlcfx</name>
@@ -13,7 +13,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>11</java.version>
+    <java.version>13</java.version>
     <javafx.version>13</javafx.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -92,8 +92,8 @@
           <version>3.0.0</version>
         </plugin>
         <plugin>
-          <artifactId>javafx-maven-plugin</artifactId>
-          <version>0.0.3</version>
+          <artifactId>maven-jlink-plugin</artifactId>
+          <version>3.0.0-alpha-1</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -108,8 +108,16 @@
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.3</version>
         <configuration>
           <mainClass>hohonuuli.vlcfx.App</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jlink-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <!-- configuration elements goes here -->
         </configuration>
       </plugin>
     </plugins>

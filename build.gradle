@@ -1,0 +1,99 @@
+plugins {
+  id 'application'
+  id 'com.adarshr.test-logger' version '1.7.0' 
+  id 'java'
+  id 'org.beryx.jlink' version "2.14.0"
+  id 'org.openjfx.javafxplugin' version "0.0.8"
+  id "com.github.ben-manes.versions" version "0.22.0" 
+  id "org.javamodularity.moduleplugin" version "1.5.0" 
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven {
+        url 'http://dl.bintray.com/hohonuuli/maven'
+    }
+    maven {
+        url 'http://dl.bintray.com/jerady/maven'
+    }
+}
+
+dependencies {
+  implementation 'uk.co.caprica:vlcj:4.2.0'
+  testImplementation 'junit:junit:4.12'
+}
+
+javafx {
+    version = "13"
+    modules = [
+            'javafx.base',
+            'javafx.controls',
+            'javafx.fxml',
+            'javafx.graphics',
+            'javafx.web'
+
+    ]
+}
+
+def runtimeJvmArgs = [
+        '-Xms1g'
+]
+
+application {
+    mainClassName = "hohonuuli.vlcfx/hohonuuli.vlcfx.App"
+    applicationDefaultJvmArgs = runtimeJvmArgs
+}
+
+jlink {
+    imageZip = file("$buildDir/image-zip/vlcfx.zip")
+    options = [
+            '--bind-services',
+            '--strip-debug',
+            '--compress', '2',
+            '--no-header-files',
+            '--no-man-pages',
+    ]
+
+    addExtraDependencies("javafx")
+
+    if(System.getenv("CI")) {
+        ["win", "linux", "mac"].each { name ->
+            targetPlatform(name) {
+                jdkHome = System.getenv("JDK_HOME_${name.toUpperCase()}")
+                addExtraModulePath(System.getenv("OPENJFX_MODS_${name.toUpperCase()}"))
+            }
+        }
+    }
+
+    launcher {
+        name = 'VLCFX'
+        jvmArgs = runtimeJvmArgs
+    }
+
+    jpackage {
+        jpackageHome = System.getenv("JPACKAGE_HOME")
+
+        def customInstallerOptions = [
+                "--identifier", project.name,
+                "--copyright", "Monterey Bay Aquarium Research Institute",
+                "--vendor", "org.mbari"
+        ]
+
+        if  (org.gradle.internal.os.OperatingSystem.current().isLinux()) {
+            installerType = "deb"
+        }
+        else if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+            installerType = "msi"
+        }
+        else {
+            installerType = "dmg"
+            customInstallerOptions.addAll([
+                    "--mac-bundle-name", "VLCFX",
+            ])
+        }
+        installerOptions = customInstallerOptions
+
+    }
+
+}
