@@ -4,7 +4,7 @@ Demostration player using JavaFX 13+ (with native buffer support) and VLCJ. From
 
 ## Usage
 
-Requires at least Java 12 to comple and build. To package up like a platform native app, you will also need to download a [JDK with jpackage](https://jdk.java.net/jpackage/).
+Requires at least Java 12 to compile and run. To package up like a platform native app, you will also need to download a [JDK with jpackage](https://jdk.java.net/jpackage/).
 
 ### Run
 
