@@ -4,6 +4,8 @@ Demostration player using JavaFX 13+ (with native buffer support) and VLCJ. From
 
 ## Usage
 
+Requires at leas Java 12 to comple and build. You will also need to download a [JDK with jpackage](https://jdk.java.net/jpackage/).
+
 ### run
 
 ```
