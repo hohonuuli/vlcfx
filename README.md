@@ -4,10 +4,15 @@ Demostration player using JavaFX 13+ (with native buffer support) and VLCJ. From
 
 ## Usage
 
+### run
+
 ```
-mvn clean javafx:run
+gradle run
+```
 
-// or
+### Package
 
-mvn exec:java -Dexec.mainClass=hohonuuli.vlcfx.App
+```
+export JPACKAGE_HOME=/Path/to/jdk14-with-jpackage
+gradle jpackage
 ```
